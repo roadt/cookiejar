@@ -307,6 +307,10 @@ module CookieJar
           first = false
         else
           case key
+          when :version
+            args[:version] = keyvalue.to_i
+          when :'max-age'
+            args[:'max-age'] = Time.now + keyvalue.to_i
           when :expires
             begin
               args[:expires_at] = Time.parse keyvalue 
@@ -325,7 +329,7 @@ module CookieJar
           end
         end
       end
-      args[:version] = 0
+      args[:version] ||= 0
       args
     end
     
